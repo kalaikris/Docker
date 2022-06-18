@@ -1,0 +1,16 @@
+# to build the base image 
+FROM ubuntu:latest
+LABEL kalai:0.0.1
+RUN apt-get upadte -y # to run the commands  in the base image 
+# cmd is to used to run the application in the container {cmd will have one command and it should be in last}
+CMD 
+# to use expose command to give the port to the container 
+EXPOSE
+# env is used to give value to the conatainer 
+ENV
+#  to add the data in to the container
+ADD {source} {container path}
+# volume is used the build own volume in wroking directory
+VOLUME
+# workdir this will set the working directory in the dcoker command 
+WORKDIR

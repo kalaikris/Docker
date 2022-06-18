@@ -1,0 +1,87 @@
+##DOCKER COMMANDS:
+docker version
+docker info  ==> complete information of the docker
+
+docker container run nginx
+docker container ls
+# to delete the docker conatiner
+docker container rm docker container rm nginx mysqlb
+
+# TO RUN THE CONTAINER 
+docker container run -d -p 3306:3306 --name mysqldb --env MYSQL_RANDOM_ROOT_PASSWORD=yes mysql:latest
+dockekr container run -d -p 80:80 --name kalai nginx
+# -d is the detach mode to run the container in the back ground
+# -p is the port 3306:3306 the first port will run on the hostmachine and second port will rin on the docker container
+# --name to give name to the conatiner 
+# --env to give varabiles like passwd  and rootuser name like that 
+# :latest tag  will run the latest version of the mysql or nginx
+
+# To check the container logs
+docker container logs mysqldb 
+
+# To check the docker container pid process
+docker container top [container id]
+# To inspect the docker container 
+docker container inspect 
+# To inspect the network setting
+docker container inspect -f '{{.NetworkSettings.IPAddress}}' 3b83dd569b56
+# To see the docker container stats cpu and memory usage of the server 
+docker container stats
+# to start the container in the interactive mode {means using the terminal in container}
+docker container run -it --name nginxweb nginx bash
+# go to terminal in running container
+docker container exec -it {container ID/NAME} bash
+# Docker neetwork commands
+docker network ls
+docker network create mynetwork
+# connect the container into the network
+docker nertwork connect network1 container1
+ # Disconnect the container into network
+ docker network disconnect network1 container1
+ # docker image command
+ docker image ls
+ # to see the full info of the image 
+ docker inspect nginx
+ # to see what are commanda are run before
+ docker history nginx
+ #docker image tags
+ docker tag {image name} {tag name your desire}
+ #To upload the image into the docker hub
+ docker login
+ docker image push kalakris/ubunutlatest   # note please createthe image into username
+# docker build 
+docker build -t imagename:tagname dir 
+#=========DOCKER VOLUMES==========
+
+#Create Volumes
+docker volume create <name>
+#Remove Volume
+docker volume rm <name>
+#Run a container with volumes 
+docker container run -d - -name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True - -mount source=mysql-db, target=/var/lib/mysql mysql
+
+BLIND MOUNTS
+
+# docker create the blind mounts nginx file 
+
+docker container run -d --name nginx --mount type=bind,source=$(pwd),target=/app nginx
+
+#Docker swarm commands
+ #To add the manager and nodes in the docker 
+ docker swarm init --advertise-addr {ip of the machine}
+
+docker swarm --help
+docker swarm ls
+
+docker service update <service_name> - -replicas <Number of Services>
+
+
+docker stack deploy -c docker-compose.yml nginx_start
+
+
+Create an Overlay Network.
+docker network create -d overlay <network_name>
+
+
+
+

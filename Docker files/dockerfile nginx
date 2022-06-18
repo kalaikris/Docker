@@ -1,0 +1,7 @@
+FROM ubuntu:latest
+LABEL version="0.0.1"
+LABEL maitainer="kalaiselvan467@gmail.com"
+RUN  apt-get update && apt-get upgrade -y
+RUN apt-get install nginx -y
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

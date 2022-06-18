@@ -1,0 +1,57 @@
+version : '3'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: webserver
+    restart: always
+    volumes: 
+      - type: bind
+        source: /root/static
+        target: /usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+  database:
+    image: mysql:5.7 
+    container_name: database
+    restart: always
+    volumes: 
+      - kalai:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+       MYSQL_ROOT_PASSWORD: kalai
+       MYSQL_DATABASE: kalai_db
+       MYSQL_USER: kalai_user
+       MYSQL_PASSWORD: kalai_user_pass
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+  php:
+    image: php:7.0-fpm
+    container_name: php-container
+    port: 
+      - 9000:9000
+    volumes:
+      - type: bind
+        source: /root/static
+        target: /usr/share/nginx/html
+    restart: always
+volumes:
+  kalai:   
+  
+
+
+
+172.20.0.5
+172.20.0.4 webserver
