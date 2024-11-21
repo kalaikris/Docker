@@ -51,8 +51,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y openssh-client
-          echo ${{ secrets.SSH_PRIVATE_KEY }} >> Github.pem
-          chmod 400 "Github.pem"      
-          ssh -i "Github.pem" ubuntu@${{ secrets.EC2_PUBLIC_DNS }} \
-          "docker pull ${{ secrets.DOCKER_IMAGE }} && docker run -d ${{ secrets.DOCKER_IMAGE }}"
+
+      - name: Add SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > github.pem
+          chmod 400 github.pem
+
+      # Run commands on EC2 instance
+      - name: Run Command on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i github.pem ubuntu@${{ secrets.EC2_PUBLIC_DNS }} << 'EOF'
+          echo "Running commands on EC2 instance"
+          docker pull ${{ secrets.DOCKER_IMAGE }}
+          docker run -d ${{ secrets.DOCKER_IMAGE }}
+          EOF
           
