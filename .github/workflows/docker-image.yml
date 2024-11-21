@@ -23,7 +23,7 @@ jobs:
       uses: docker/login-action@v2
       with:
         username: Ahil
-        password: bene4dict
+        password: dckr_pat_kcgv2dRl8REnOWS6Tk1NHR-Q3Rc
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
